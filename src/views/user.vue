@@ -1,5 +1,5 @@
 <template>
-    <Row type="flex">
+    <Row type="flex" >
         <Col span="4">
         <Menu :theme="theme2"
               active-name="/User/New"
@@ -17,7 +17,7 @@
             </Submenu>
         </Menu>
         </Col>
-        <Col span="20">
+        <Col span="20" style="padding:0 20px">
         <router-view></router-view>
         </Col>    
     </Row>
