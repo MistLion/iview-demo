@@ -215,7 +215,5 @@ export default {
 }
 </script>
 <style>
-label{
-    font-size:14px !important
-}
+
 </style>

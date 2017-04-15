@@ -18,11 +18,11 @@ module.exports = {
                 options: {
                     loaders: {
                         less: ExtractTextPlugin.extract({
-                            use: ['css-loader?minimize', 'autoprefixer-loader', 'less-loader'],
+                            use: ['css-loader?minimize', 'postcss-loader', 'less-loader'],
                             fallback: 'vue-style-loader'
                         }),
                         css: ExtractTextPlugin.extract({
-                            use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
+                            use: ['css-loader', 'postcss-loader', 'less-loader'],
                             fallback: 'vue-style-loader'
                         })
                     }
@@ -40,14 +40,15 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                    use: ['css-loader?minimize', 'autoprefixer-loader'],
+                    use: ['postcss-loader','css-loader'],
                     fallback: 'style-loader'
                 })
             },
             {
                 test: /\.less/,
+                //loaders: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
                 use: ExtractTextPlugin.extract({
-                    use: ['autoprefixer-loader', 'less-loader'],
+                    use: ['css-loader','postcss-loader', 'less-loader'],
                     fallback: 'style-loader'
                 })
             },
@@ -61,6 +62,19 @@ module.exports = {
             }
         ]
     },
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: function () {
+                    return [
+                        require("autoprefixer")({
+                            browsers: ['ie>=8', '>1% in CN']
+                        })
+                    ]
+                }
+            }
+        })
+    ],
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {

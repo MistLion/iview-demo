@@ -11,11 +11,11 @@
                  justify="end">
                 <Col span="12"
                      offset="6">
-                <Menu-item name="/">
+                <Menu-item name="/Content">
                     <Icon type="ios-paper"></Icon>
                     内容管理
                 </Menu-item>
-                <Menu-item name="/Content">
+                <Menu-item name="/">
                     <Icon type="ios-people"></Icon>
                     用户管理
                 </Menu-item>
