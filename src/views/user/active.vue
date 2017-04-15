@@ -1,7 +1,9 @@
 <template>
-    <div style="padding:20px 0;">
-        <Form :label-width="80">
-            <Row :gutter="32">
+    <div style="">
+        <Form :label-width="80"
+              style="padding:20px 20px 0 20px;height:100%">
+            <Row :gutter="32"
+               >
                 <Col span="6">
                 <Form-item label="选择城市">
                     <Select v-model="model1">
@@ -25,15 +27,54 @@
                     <Date-picker type="daterange"
                                  placement="bottom-end"
                                  placeholder="选择日期"></Date-picker>
-    
+                </Form-item>
+                </Col>
+                <Col span="6"  >
+                <Button-group style="float:right">
+                    <Button icon="search" loading
+                            type="info">查询</Button>
+                    <Button icon="document"
+                            type="primary">导出</Button>
+                </Button-group>
+                    </Col>
+            </Row>
+            <Row v-bind:style="{display:showHidden}" :gutter="32" >
+                <Col span="6">
+                <Form-item label="选择城市">
+                    <Select v-model="model1">
+                        <Option v-for="item in cityList"
+                                :value="item.value"
+                                :key="item">{{ item.label }}</Option>
+                    </Select>
                 </Form-item>
                 </Col>
                 <Col span="6">
-                <Button type="success"
-                        long>确认提交</Button>
+                <Form-item label="选择车站">
+                    <Select v-model="model2">
+                        <Option v-for="item in stationList"
+                                :value="item.value"
+                                :key="item">{{ item.label }}</Option>
+                    </Select>
+                </Form-item>
                 </Col>
+                <Col span="6">
+                <Form-item label="选择日期">
+                    <Date-picker type="daterange"
+                                 placement="bottom-end"
+                                 placeholder="选择日期"></Date-picker>
+                </Form-item>
+                </Col>
+                <Col span="6"  >
+                <Button-group style="float:right">
+                    <Button icon="search" loading
+                            type="info">查询</Button>
+                    <Button icon="document"
+                            type="primary">导出</Button>
+                </Button-group>
+                    </Col>
             </Row>
         </Form>
+           <div class="example-code-more"><i v-bind:style="{display:notShowHidden}"  v-on:click="show"  class="ivu-icon ivu-icon-ios-arrow-down"></i> <i class="ivu-icon ivu-icon-ios-arrow-up"   v-on:click="show"  v-bind:style="{display:showHidden}" ></i> <button type="button" class="ivu-btn ivu-btn-text" style="display: none;" v-on:click="show"><!----> <!----> <span>显示代码</span></button></div>
         <Table :context="self"
                :data="tableData1"
                :columns="tableColumns1"
@@ -51,6 +92,8 @@
 export default {
     data() {
         return {
+            showHidden:'none',
+            notShowHidden:'block',
             cityList: [
                 {
                     value: 'beijing',
@@ -163,6 +206,10 @@ export default {
         }
     },
     methods: {
+        show:function(){
+            this.showHidden=this.showHidden=="none"?"block":"none";
+            this.notShowHidden=this.notShowHidden=="none"?"block":"none";
+        },
         handleSubmit(name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -215,5 +262,11 @@ export default {
 }
 </script>
 <style>
+.example-code-more {
+    text-align: center;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
 
 </style>

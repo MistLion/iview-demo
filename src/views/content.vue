@@ -1,5 +1,5 @@
 <template>
-    <Row>
+    <Row type="flex">
         <Col span="4">
         <Menu :theme="theme2"
               active-name="1-2"
