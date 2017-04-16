@@ -307,7 +307,9 @@ export default {
     },
     methods: {
         removeRow(){
-            this.tableData1.splice(this.tableData1.indexOf(this.selectedRow),1);
+            var index=this.tableData1.indexOf(this.selectedRow);
+            console.log(index);
+            this.tableData1.splice(index-1,1);
         },
         selectRow(currentRow,oldCurrentRow){
             this.selectedRow=currentRow;
