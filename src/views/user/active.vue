@@ -1,5 +1,10 @@
 <template>
-    <div style="">
+    <div>
+        <Breadcrumb style="padding-top:20px">
+            <Breadcrumb-item href="/">首页</Breadcrumb-item>
+            <Breadcrumb-item href="/User">用户管理</Breadcrumb-item>
+            <Breadcrumb-item>活跃用户</Breadcrumb-item>
+        </Breadcrumb>
         <Form :label-width="80"
               style="padding:20px 0 0 0;height:100%">
             <Row :gutter="16">
@@ -34,7 +39,9 @@
                             icon="plus"
                             @click="modal1 = true">添加</Button>
                     <Button type="ghost"
-                            icon="trash-b"  :disabled="canRemove" @click="removeRow">删除</Button>
+                            icon="trash-b"
+                            :disabled="canRemove"
+                            @click="removeRow">删除</Button>
                     <Button icon="search"
                             loading
                             type="info">查询</Button>
@@ -174,7 +181,7 @@
 export default {
     data() {
         return {
-            selectedRow:null,
+            selectedRow: null,
             formItem: {
                 input: '',
                 select: '',
@@ -306,13 +313,13 @@ export default {
         }
     },
     methods: {
-        removeRow(){
-            var index=this.tableData1.indexOf(this.selectedRow);
+        removeRow() {
+            var index = this.tableData1.indexOf(this.selectedRow);
             console.log(index);
-            this.tableData1.splice(index-1,1);
+            this.tableData1.splice(index - 1, 1);
         },
-        selectRow(currentRow,oldCurrentRow){
-            this.selectedRow=currentRow;
+        selectRow(currentRow, oldCurrentRow) {
+            this.selectedRow = currentRow;
         },
         ok() {
             this.$Message.info('确认添加');
@@ -373,9 +380,9 @@ export default {
             this.tableData1 = this.mockTableData1();
         }
     },
-    computed:{
-        canRemove:function(){
-            return this.selectedRow==null;
+    computed: {
+        canRemove: function () {
+            return this.selectedRow == null;
         }
     }
 }
