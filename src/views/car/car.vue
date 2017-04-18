@@ -8,11 +8,12 @@
         <Form :label-width="80"
               style="padding:20px 0 0 0;height:100%">
             <Row :gutter="16">
-                <Col span="4">
+                 <Col span="3">
                 <Button-group style="float:left">
-                    <Button type="ghost"
-                            icon="plus"
-                            @click="createModal = true">添加</Button>
+                    <Button icon="compose"
+                            type="success">导入</Button>
+                    <Button icon="document"
+                            type="primary">导出</Button>
                 </Button-group>
                 </Col>
 
@@ -40,14 +41,15 @@
                 </Form-item>
                 </Col>
 
-                <Col span="6">
+                <Col span="3"
+                     offset="12">
                 <Button-group style="float:right">
+                    <Button type="ghost"
+                            icon="plus"
+                            @click="createModal = true">添加</Button>
                     <Button icon="search"
-                            type="info">查询</Button>
-                    <Button icon="document"
-                            type="primary">导入</Button>
-                    <Button icon="document"
-                            type="primary">导出</Button>
+                            type="info"
+                            @click="search(1)">查询</Button>
                 </Button-group>
                 </Col>
             </Row>
@@ -56,7 +58,7 @@
 <Table :context="self" :data="carsData" @on-current-change="selectRow" :columns="carsTable" highlight-row stripe></Table>
 <div style="margin: 10px;overflow: hidden">
 <div style="float: right;">
-<Page :total="100" :current="1" @on-change="changePage" show-sizer></Page>
+ <Page :total="totalNumber" :current="1" :page-size="pageSize" v-on:on-change="changePage" show-sizer></Page>
 </div>
 </div>
 
@@ -89,8 +91,8 @@
                 <Form-item label="司机手机号">
                     <Input v-model="createItem.driver_mobile"></Input>
                 </Form-item>
-                <Form-item label="开关">
-                    <i-switch v-model="createItem.enabled"
+                <Form-item label="状态">
+                    <i-switch v-model="createItem.state"
                             size="large">
                         <span slot="open">启用</span>
                         <span slot="close">停用</span>
@@ -131,11 +133,17 @@
                 {
                     value: '0',
                     label: '停用'
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    render() {
+                        return `<Button-group> <i-button type="error" >删除</i-button><i-button type="info" >编辑</i-button></Button-group>`;
+                    }
                 }],
                 company_name:'',
                 car_type:'',
                 state:'',
-
                 createItem:
                 {
                     company_name:'',
@@ -144,12 +152,14 @@
                     seat_count:'',
                     driver_name:'',
                     driver_mobile:'',
-                    enabled:''
+                    state:''
                 },
                 createModal:false,
 
                 self:this,
-                carsData: this.mockTableData1(),
+                pageSize: 10,
+                totalNumber: 10,
+                carsData: [],
                 carsTable: [
                     {
                         type: 'index',
@@ -174,7 +184,7 @@
                     },
                     {
                         title: '司机姓名',
-                        key: 'driver'
+                        key: 'driver_name'
                     },
                     {
                         title: '司机手机号',
@@ -184,8 +194,8 @@
                         title: '状态',
                         key: 'state',
                         render(row) {
-                            const color = row.status == 1 ? 'green' : 'red';
-                            const text = row.status == 1 ? '启用' : '停用';
+                            const color = row.state == 1 ? 'green' : 'red';
+                            const text = row.state == 1 ? '启用' : '停用';
                             return `<tag type="dot" color="${color}">${text}</tag>`;
                         }
                     }]
@@ -198,11 +208,23 @@
         cancel() {
             this.$Message.warning('取消添加');
         },
-            mockTableData1() {
-            },
-            changePage() {
-                this.carsTable = this.mockTableData1();
-            }
+        search(pageNumber) {
+            this.$http.get('http://localhost:3000/stations',{
+                params:{
+                    _page:pageNumber,
+                    _limit:this.pageSize,
+                    company_name:this.company_name,
+                    car_type:this.car_type,
+                    state:this.state
+                }
+            } ).then((res) => {
+                this.totalNumber =Number(res.headers['map']['X-Total-Count'][0]) 
+                this.tableContent = res.body;
+            });
         },
+        changePage:function(pageNumber) {
+            this.search(pageNumber);
+        }
+        }
     }
 </script>
