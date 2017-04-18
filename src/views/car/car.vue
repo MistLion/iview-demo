@@ -7,22 +7,25 @@
 </Breadcrumb>
         <Form :label-width="80"
               style="padding:20px 0 0 0;height:100%">
-            <Row :gutter="16">
-                 <Col span="3">
+            <Row :gutter="10">
+                 <Col span="4">
                 <Button-group style="float:left">
                     <Button icon="compose"
-                            type="success">导入</Button>
+                            type="primary">导入</Button>
                     <Button icon="document"
-                            type="primary">导出</Button>
+                            type="success">导出</Button>
+                            <Button type="info"
+                            icon="plus"
+                            @click="createModal = true">添加</Button>
                 </Button-group>
                 </Col>
 
-                <Col span="4">
+                <Col span="5"offset="3">
                 <Form-item label="单位">
                     <Input v-model="company_name" placeholder="请输入"></Input>
                 </Form-item>
                 </Col>
-                <Col span="4">
+                <Col span="5">
                 <Form-item label="车型">
                     <Select v-model="car_type">
                         <Option v-for="item in cars_types"
@@ -31,7 +34,7 @@
                     </Select>
                 </Form-item>
                 </Col>
-                <Col span="4">
+                <Col span="5">
                 <Form-item label="状态">
                     <Select v-model="state">
                         <Option v-for="item in status"
@@ -41,15 +44,12 @@
                 </Form-item>
                 </Col>
 
-                <Col span="3"
-                     offset="12">
+                <Col span="2" >
                 <Button-group style="float:right">
-                    <Button type="ghost"
-                            icon="plus"
-                            @click="createModal = true">添加</Button>
+                    
                     <Button icon="search"
                             type="info"
-                            @click="search(1)">查询</Button>
+                            @click="search(3)">查询</Button>
                 </Button-group>
                 </Col>
             </Row>
