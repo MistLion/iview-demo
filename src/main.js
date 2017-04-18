@@ -5,11 +5,14 @@ import Routers from './router';
 import Util from './libs/util';
 import App from './app.vue';
 import Vuex from 'vuex';
+import VueResource from 'vue-resource';
+import Linq from 'linq';
 //import "iview/src/styles/index.less"
 //import 'iview/dist/styles/iview.css';
 import './my-theme/index.less'
 
 Vue.use(VueRouter);
+Vue.use(VueResource);
 Vue.use(iView);
 Vue.use(Vuex);
 

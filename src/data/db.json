@@ -1,0 +1,516 @@
+{
+    "cars": [
+        {
+            "car_type": "1",
+            "car_plate": "皖A11111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "杨一",
+            "driver_mobile": "13911111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A12222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "杨二",
+            "driver_mobile": "13912222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A13333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "杨三",
+            "driver_mobile": "13913333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A14444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "杨四",
+            "driver_mobile": "13914444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A15555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "杨五",
+            "driver_mobile": "13915555555",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A21111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "张一",
+            "driver_mobile": "13921111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A22222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "张二",
+            "driver_mobile": "13922222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A23333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "张三",
+            "driver_mobile": "13923333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A24444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "张四",
+            "driver_mobile": "13924444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A25555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "张五",
+            "driver_mobile": "13925555555",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A31111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "李一",
+            "driver_mobile": "13931111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A32222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "李二",
+            "driver_mobile": "13932222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A33333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "李三",
+            "driver_mobile": "13933333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A34444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "李四",
+            "driver_mobile": "13934444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A35555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "李五",
+            "driver_mobile": "13935555555",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A41111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "王一",
+            "driver_mobile": "13941111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A42222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "李王二",
+            "driver_mobile": "13942222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A43333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "王三",
+            "driver_mobile": "13943333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A44444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "王四",
+            "driver_mobile": "13944444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A45555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "王五",
+            "driver_mobile": "13945555555",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A51111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "熊一",
+            "driver_mobile": "13951111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A52222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "熊二",
+            "driver_mobile": "13952222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A53333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "熊三",
+            "driver_mobile": "13953333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A54444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "熊四",
+            "driver_mobile": "13954444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A55555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "熊五",
+            "driver_mobile": "13955555555",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A61111",
+            "company_name": "安徽新亚",
+            "seat_count": "40",
+            "driver": "刘一",
+            "driver_mobile": "13961111111",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A62222",
+            "company_name": "合肥汽车站南区",
+            "seat_count": "20",
+            "driver": "刘二",
+            "driver_mobile": "13962222222",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A63333",
+            "company_name": "合肥中心站",
+            "seat_count": "40",
+            "driver": "刘三",
+            "driver_mobile": "13963333333",
+            "state": "1"
+        },
+        {
+            "car_type": "2",
+            "car_plate": "皖A64444",
+            "company_name": "合肥汽车总站",
+            "seat_count": "20",
+            "driver": "刘四",
+            "driver_mobile": "13964444444",
+            "state": "1"
+        },
+        {
+            "car_type": "1",
+            "car_plate": "皖A65555",
+            "company_name": "旅游汽车站",
+            "seat_count": "40",
+            "driver": "刘五",
+            "driver_mobile": "13965555555",
+            "state": "1"
+        }
+    ],
+    "stations": [
+        {
+            "station_name": "合肥汽车站中心站",
+            "station_code": "hf0001",
+            "city_name": "合肥",
+            "city_code": "ahhf01",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "合肥汽车站南区",
+            "station_code": "hf0002",
+            "city_name": "合肥",
+            "city_code": "ahhf02",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "合肥汽车站西区",
+            "station_code": "hf0003",
+            "city_name": "合肥",
+            "city_code": "ahhf03",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "合肥汽车站东区",
+            "station_code": "hf0004",
+            "city_name": "合肥",
+            "city_code": "ahhf04",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "合肥汽车站北区",
+            "station_code": "hf0005",
+            "city_name": "合肥",
+            "city_code": "ahhf05",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "杭州汽车站中心站",
+            "station_code": "hz0001",
+            "city_name": "杭州",
+            "city_code": "zjhz01",
+            "company_name": "恒生长运",
+            "company_info": ""
+        },
+        {
+            "station_name": "杭州汽车站南区",
+            "station_code": "hz0002",
+            "city_name": "杭州",
+            "city_code": "zjhz02",
+            "company_name": "恒生长运",
+            "company_info": ""
+        },
+        {
+            "station_name": "杭州汽车站西区",
+            "station_code": "hz0003",
+            "city_name": "杭州",
+            "city_code": "zjhz03",
+            "company_name": "恒生长运",
+            "company_info": ""
+        },
+        {
+            "station_name": "杭州汽车站东区",
+            "station_code": "hz0004",
+            "city_name": "杭州",
+            "city_code": "zjhz04",
+            "company_name": "恒生长运",
+            "company_info": ""
+        },
+        {
+            "station_name": "杭州汽车站北区",
+            "station_code": "hz0005",
+            "city_name": "杭州",
+            "city_code": "zjhz05",
+            "company_name": "恒生长运",
+            "company_info": ""
+        },
+        {
+            "station_name": "芜湖汽车站中心站",
+            "station_code": "wh0001",
+            "city_name": "芜湖",
+            "city_code": "ahwh01",
+            "company_name": "安行巴士",
+            "company_info": ""
+        },
+        {
+            "station_name": "芜湖汽车站南区",
+            "station_code": "wh0002",
+            "city_name": "芜湖",
+            "city_code": "ahwh02",
+            "company_name": "安行巴士",
+            "company_info": ""
+        },
+        {
+            "station_name": "芜湖汽车站西区",
+            "station_code": "wh0003",
+            "city_name": "芜湖",
+            "city_code": "ahwh03",
+            "company_name": "安行巴士",
+            "company_info": ""
+        },
+        {
+            "station_name": "芜湖汽车站东区",
+            "station_code": "wh0004",
+            "city_name": "芜湖",
+            "city_code": "ahwh04",
+            "company_name": "安行巴士",
+            "company_info": ""
+        },
+        {
+            "station_name": "芜湖汽车站北区",
+            "station_code": "wh0005",
+            "city_name": "芜湖",
+            "city_code": "ahwh05",
+            "company_name": "安行巴士",
+            "company_info": ""
+        },
+        {
+            "station_name": "宿州汽车站中心站",
+            "station_code": "sz0001",
+            "city_name": "宿州",
+            "city_code": "ahsz01",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宿州汽车站南区",
+            "station_code": "sz0002",
+            "city_name": "宿州",
+            "city_code": "ahsz02",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宿州汽车站西区",
+            "station_code": "sz0003",
+            "city_name": "宿州",
+            "city_code": "ahsz03",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宿州汽车站东区",
+            "station_code": "sz0004",
+            "city_name": "宿州",
+            "city_code": "ahsz04",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宿州汽车站北区",
+            "station_code": "sz0005",
+            "city_name": "宿州",
+            "city_code": "ahsz05",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "阜阳汽车站中心站",
+            "station_code": "hy0001",
+            "city_name": "阜阳",
+            "city_code": "ahhy01",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "阜阳汽车站南区",
+            "station_code": "hy0002",
+            "city_name": "阜阳",
+            "city_code": "ahhy02",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "阜阳汽车站西区",
+            "station_code": "hy0003",
+            "city_name": "阜阳",
+            "city_code": "ahhy03",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "阜阳汽车站东区",
+            "station_code": "hy0004",
+            "city_name": "阜阳",
+            "city_code": "ahhy04",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "阜阳汽车站北区",
+            "station_code": "hy0005",
+            "city_name": "阜阳",
+            "city_code": "ahhy05",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宣城汽车站中心站",
+            "station_code": "xc0001",
+            "city_name": "宣城",
+            "city_code": "ahxc01",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宣城汽车站南区",
+            "station_code": "xc0002",
+            "city_name": "宣城",
+            "city_code": "ahxc02",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宣城汽车站西区",
+            "station_code": "xc0003",
+            "city_name": "宣城",
+            "city_code": "ahxc03",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宣城汽车站东区",
+            "station_code": "xc0004",
+            "city_name": "宣城",
+            "city_code": "ahxc04",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        },
+        {
+            "station_name": "宣城汽车站北区",
+            "station_code": "xc0005",
+            "city_name": "宣城",
+            "city_code": "ahxc05",
+            "company_name": "恒生皖美",
+            "company_info": ""
+        }
+    ]
+}

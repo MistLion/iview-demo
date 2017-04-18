@@ -14,7 +14,7 @@
                 </Menu-item>
                 <Menu-item name="/Car">
                     <Icon type="ios-paper"></Icon>
-                    直通车管理
+                    直通车
                 </Menu-item>
                 <Menu-item name="/User">
                     <Icon type="ios-people"></Icon>

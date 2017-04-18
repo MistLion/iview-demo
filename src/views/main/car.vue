@@ -23,7 +23,7 @@
             </Menu-item>
         </Menu>
         </Col>
-        <Col span="20">
+        <Col span="20" style="padding:0 20px">
         <router-view></router-view>
         </Col>
     </Row>
