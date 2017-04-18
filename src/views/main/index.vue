@@ -8,6 +8,10 @@
                  justify="end">
                 <Col span="12"
                      offset="6">
+                <Menu-item name="/Index/Home">
+                    <Icon type="home"></Icon>
+                    首页
+                </Menu-item>
                 <Menu-item name="/Car">
                     <Icon type="ios-paper"></Icon>
                     直通车管理

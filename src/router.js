@@ -4,6 +4,7 @@ const routers = [
     },
     {
         path: '/Index',
+        redirect:'/Index/Home',
         meta: {
             title: ''
         },
@@ -23,6 +24,7 @@ const routers = [
             },
             {
                 path: '/Car',
+                redirect:'/Car/Car',
                 meta: {
                     title: '车辆管理'
                 },
@@ -31,6 +33,13 @@ const routers = [
                     { path: '/Car/Car', component: (resolve) => require(['./views/car/car.vue'], resolve) },
                     { path: '/Car/Station', component: (resolve) => require(['./views/car/station.vue'], resolve) }
                 ],
+            },
+            {
+                path: '/Index/Home',
+                meta: {
+                    title: '首页'
+                },
+                component: (resolve) => require(['./views/main/home.vue'], resolve)
             }
         ]
     },
