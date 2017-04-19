@@ -18,9 +18,9 @@
 <Col span="5" offset="3">
 <Form-item label="单位">
     <Select v-model="company_code">
-                        <Option v-for="item in companies"
-                                :value="item.value"
-                                :key="item">{{ item.label }}</Option>
+                        <Option v-for="item in companys"
+                                :value="item.company_code"
+                                :key="item">{{ item.company_name }}</Option>
                     </Select>
 </Form-item>
 </Col>
@@ -63,9 +63,9 @@
     <Form :model="createItem" :label-width="80">
         <Form-item label="所属单位">
             <Select v-model="createItem.company_code" placeholder="请选择">
-                        <Option v-for="item in cars_types"
-                                :value="item.value"
-                                :key="item">{{ item.label }}</Option>
+                        <Option v-for="item in companys"
+                                :value="item.company_code"
+                                :key="item">{{ item.company_name }}</Option>
             </Select>
         </Form-item>
         <Form-item label="车型">
@@ -100,31 +100,11 @@
 </template>
 
 <script>
+    import Linq from 'linq';
     export default {
         data() {
             return {
-                companies: [
-                    {
-                        value: 'aaa',
-                        label: 'A运输'
-                    },
-                    {
-                        value: 'bbb',
-                        label: 'B运输'
-                    },
-                    {
-                        value: 'ccc',
-                        label: 'C运输'
-                    },
-                    {
-                        value: 'ddd',
-                        label: 'D运输'
-                    },
-                    {
-                        value: 'eee',
-                        label: 'E运输'
-                    }
-                ],
+                companys: [],
                 cars_types: [
                     {
                         value: '1',
@@ -151,7 +131,7 @@
                         value: '0',
                         label: '停用'
                     }
-                    ],
+                ],
 
                 //条件查询
                 company_code: '',
@@ -174,6 +154,7 @@
                 self: this,
                 pageSize: 10,
                 totalNumber: 10,
+
                 carsData: [],
                 carsTable: [
                     {
@@ -183,7 +164,7 @@
                     },
                     {
                         title: '所属单位',
-                        key: 'company_code'
+                        key: 'company'
                     },
                     {
                         title: '车辆类型',
@@ -215,12 +196,13 @@
                         }
                     },
                     {
-                    title: '操作',
-                    key: 'action',
-                    render() {
-                        return `<Button-group> <i-button @click="delCar" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
+                        title: '操作',
+                        key: 'action',
+                        render(row, column, index) {
+                            return `<Button-group> <i-button @click="delCar(${row.id})" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
+                        }
                     }
-                }]
+                ]
             }
         },
         methods: {
@@ -242,26 +224,47 @@
                     params: params
                 }).then((res) => {
                     this.totalNumber = Number(res.headers['map']['X-Total-Count'][0])
-                    this.carsData = res.body;
+                    var that = this;
+                    this.carsData = Linq.from(res.body).select(v => {
+                        return {
+                            id: v.id,
+                            company:Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
+                            car_type: v.car_type,
+                            car_plate: v.car_plate,
+                            seat_count: v.seat_count,
+                            driver: v.driver,
+                            driver_mobile: v.driver_mobile,
+                            state: v.state
+                        }
+                    }).toArray();
                 });
+
             },
             changePage: function (pageNumber) {
                 this.search(pageNumber);
             },
-            delCar() {
+            delCar(id) {
                 this.$Modal.confirm({
-                    content: '<h3>确认删除该车辆吗</h3>',
+                    content: '<h3>确认删除该车辆吗？</h3>',
                     onOk: () => {
-                        this.$Message.info('删除了车辆');
+                        this.$http.delete('http://localhost:3000/cars/' + id
+                        ).then((res) => {
+                            this.$Message.info('删除了车辆');
+                            this.search(1);
+                        });
                     },
                     onCancel: () => {
                         this.$Message.info('取消删除');
                     }
                 });
             },
-            addCar() {
-
-            }
+            addCar() { },
+        },
+        mounted: function () {
+            this.$http.get('http://localhost:3000/companys'
+            ).then((res) => {
+                this.companys = res.body;
+            });
         }
     }
 </script>
