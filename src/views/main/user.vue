@@ -2,7 +2,7 @@
     <Row type="flex" >
         <Col span="4">
         <Menu :theme="theme2"
-              active-name="/User/New"
+              :active-name="$route.path"
               :open-names="['/User']"
               width="auto"
               v-on:on-select="jump"

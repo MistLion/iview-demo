@@ -2,13 +2,13 @@
     <div>
         <Menu mode="horizontal"
               :theme="theme1"
-              active-name="1"
+              :active-name="activePage"
               v-on:on-select="jump">
             <Row type="flex"
                  justify="end">
                 <Col span="12"
                      offset="6">
-                <Menu-item name="/Index/Home">
+                <Menu-item name="/">
                     <Icon type="home"></Icon>
                     首页
                 </Menu-item>
@@ -57,6 +57,23 @@ export default {
     },
     beforeDestroy() {
 
+    },
+    computed:{
+        activePage:function(){
+            if(this.$route.path){
+            switch(this.$route.path.split('/')[1]){
+                case 'User':
+                    return '/User';
+                    break;
+                case 'Car':
+                    return '/Car';
+                    break; 
+                default:
+                    return '/';  
+            }
+        }
+        return '/';
+        }
     },
     methods: {
         jump: function (url) {
