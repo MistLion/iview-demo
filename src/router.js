@@ -33,7 +33,7 @@ const routers = [
                     { path: '/Car/Car', component: (resolve) => require(['./views/car/car.vue'], resolve) },
                     { path: '/Car/Station', component: (resolve) => require(['./views/car/station.vue'], resolve) },
                     { path: '/Car/Line', component: (resolve) => require(['./views/car/line.vue'], resolve) },
-                    { path: '/Car/Class', component: (resolve) => require(['./views/car/Class.vue'], resolve) }
+                    { path: '/Car/Class', component: (resolve) => require(['./views/car/class.vue'], resolve) }
                 ],
             },
             {
