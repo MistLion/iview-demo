@@ -62,17 +62,17 @@
                 <Form-item label="选择城市">
                     <Select v-model="addStationModel.city_code"
                             placeholder="请选择">
-                        <Option value="beijing">北京市</Option>
-                        <Option value="shanghai">上海市</Option>
-                        <Option value="shenzhen">深圳市</Option>
+                        <Option v-for="item in citys"
+                                :value="item.id"
+                                :key="item">{{ item.city_name }}</Option>
                     </Select>
                 </Form-item>
-                  <Form-item label="选择单位">
+                <Form-item label="选择单位">
                     <Select v-model="addStationModel.company_name"
                             placeholder="请选择">
-                        <Option value="beijing">合肥客运</Option>
-                        <Option value="shanghai">芜湖运泰</Option>
-                        <Option value="shenzhen">浙江恒生</Option>
+                        <Option v-for="item in companys"
+                                :value="item.id"
+                                :key="item">{{ item.company_name }}</Option>
                     </Select>
                 </Form-item>
                 <Form-item label="联系方式">
@@ -87,12 +87,15 @@
 </template>
 
 <script>
+import Linq from 'linq';
 export default {
     data() {
         return {
             queryText: null,
             self: this,
             addModal: false,
+            citys: [],
+            companys: [],
             pageSize: 10,
             totalNumber: 10,
             stationColumns: [
@@ -128,18 +131,18 @@ export default {
                 {
                     title: '操作',
                     key: 'action',
-                    render() {
-                        return `<Button-group> <i-button @click="delStation" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
+                    render(row, column, index) {
+                        return `<Button-group> <i-button @click="delStation(${row.id})" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
                     }
                 }
             ],
             tableContent: [],
-            addStationModel:{
-                station_name:'',
-                city_code:'',
-                company_info:'',
-                company_name:'',
-                city_name:''
+            addStationModel: {
+                station_name: '',
+                city_code: '',
+                company_info: '',
+                company_name: '',
+                city_name: ''
             }
         }
     }
@@ -154,26 +157,50 @@ export default {
                 }
             }).then((res) => {
                 this.totalNumber = Number(res.headers['map']['X-Total-Count'][0])
-                this.tableContent = res.body;
-            });
-        },
-        changePage: function (pageNumber) {
-            this.search(pageNumber);
-        },
-        delStation() {
-            this.$Modal.confirm({
-                content: '<h3>确认删除该车站么</h3>',
-                onOk: () => {
+                var that = this;
+                this.tableContent = Linq.from(res.body).select(v => {
+                    return {
+                        id:v.id,
+                        station_code: v.station_code,
+                        city_code: v.city_code,
+                        city_name: Linq.from(that.citys).firstOrDefault('x=>x.city_code=="'+v.city_code+'"').city_name,
+                        company_name:Linq.from(that.companys).firstOrDefault('x=>x.company_code=="'+v.company_code+'"').company_name,
+                        company_info:v.company_info
+                    }
+                }).toArray();
+        });
+    },
+    changePage: function (pageNumber) {
+        this.search(pageNumber);
+    },
+    delStation(id) {
+        this.$Modal.confirm({
+            content: '<h3>确认删除该车站么</h3>',
+            onOk: () => {
+                this.$http.delete('http://localhost:3000/stations/' + id
+                ).then((res) => {
                     this.$Message.info('删除了车站');
-                },
-                onCancel: () => {
-                    this.$Message.info('取消删除');
-                }
-            });
-        },
-        addStation(){
+                    this.search(1);
+                });
+            },
+            onCancel: () => {
+                this.$Message.info('取消删除');
+            }
+        });
+    },
+    addStation() {
 
-        }
     }
+},
+mounted: function () {
+    this.$http.get('http://localhost:3000/citys'
+    ).then((res) => {
+        this.citys = res.body;
+    });
+    this.$http.get('http://localhost:3000/companys'
+    ).then((res) => {
+        this.companys = res.body;
+    });
+}
 }
 </script>
