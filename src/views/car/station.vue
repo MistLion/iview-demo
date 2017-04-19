@@ -38,19 +38,19 @@
         <Table :context="self"
                :data="tableContent"
                :columns="stationColumns"
-               highlight-row
                stripe></Table>
         <div style="margin: 10px;overflow: hidden">
             <div style="float: right;">
                 <Page :total="totalNumber"
-                      :current="1"
+                      :current="currentPage"
                       :page-size="pageSize"
                       v-on:on-change="changePage"
+                      v-on:on-page-size-change="changePageSize"
                       show-sizer></Page>
             </div>
         </div>
         <Modal v-model="addModal"
-               title="添加"
+               title="编辑车站"
                @on-ok="addStation"
                @on-cancel="$Message.info('取消添加');">
             <Form :model="addStationModel"
@@ -63,7 +63,7 @@
                     <Select v-model="addStationModel.city_code"
                             placeholder="请选择">
                         <Option v-for="item in citys"
-                                :value="item.id"
+                                :value="item.city_code"
                                 :key="item">{{ item.city_name }}</Option>
                     </Select>
                 </Form-item>
@@ -71,12 +71,49 @@
                     <Select v-model="addStationModel.company_name"
                             placeholder="请选择">
                         <Option v-for="item in companys"
-                                :value="item.id"
+                                :value="item.company_code"
                                 :key="item">{{ item.company_name }}</Option>
                     </Select>
                 </Form-item>
                 <Form-item label="联系方式">
-                    <Input v-model="addStationModel.company_info"
+                    <Input v-model="addStationModel.station_info"
+                           type="textarea"
+                           :autosize="{minRows: 2,maxRows: 5}"
+                           placeholder="请输入..."></Input>
+                </Form-item>
+            </Form>
+        </Modal>
+        <Modal v-model="editModal"
+               title="编辑车站"
+               @on-ok="editStation"
+               @on-cancel="$Message.info('取消编辑');">
+            <Form :model="editStationModel"
+                  :label-width="80">
+                <Form-item label="车站名称">
+                    <Input v-model="editStationModel.station_name"></Input>
+                </Form-item>
+                <Form-item label="车站代码">
+                    <Input v-model="editStationModel.station_code"
+                           disabled></Input>
+                </Form-item>
+                <Form-item label="选择城市">
+                    <Select v-model="editStationModel.city_code"
+                            placeholder="请选择">
+                        <Option v-for="item in citys"
+                                :value="item.city_code"
+                                :key="item">{{ item.city_name }}</Option>
+                    </Select>
+                </Form-item>
+                <Form-item label="选择单位">
+                    <Select v-model="editStationModel.company_code"
+                            placeholder="请选择">
+                        <Option v-for="item in companys"
+                                :value="item.company_code"
+                                :key="item">{{ item.company_name }}</Option>
+                    </Select>
+                </Form-item>
+                <Form-item label="联系方式">
+                    <Input v-model="editStationModel.station_info"
                            type="textarea"
                            :autosize="{minRows: 2,maxRows: 5}"
                            placeholder="请输入..."></Input>
@@ -93,7 +130,9 @@ export default {
         return {
             queryText: null,
             self: this,
+            currentPage: 1,
             addModal: false,
+            editModal: false,
             citys: [],
             companys: [],
             pageSize: 10,
@@ -126,13 +165,13 @@ export default {
                 },
                 {
                     title: '联系方式',
-                    key: 'company_info'
+                    key: 'station_info'
                 },
                 {
                     title: '操作',
                     key: 'action',
                     render(row, column, index) {
-                        return `<Button-group> <i-button @click="delStation(${row.id})" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
+                        return `<Button-group> <i-button @click="delStation(${row.id})" type="ghost" style="color:red">删除</i-button><i-button  @click="editStationShow(row)"  type="ghost" >编辑</i-button></Button-group>`;
                     }
                 }
             ],
@@ -140,10 +179,10 @@ export default {
             addStationModel: {
                 station_name: '',
                 city_code: '',
-                company_info: '',
-                company_name: '',
-                city_name: ''
-            }
+                station_info: '',
+                company_code: '',
+            },
+            editStationModel: {}
         }
     }
     ,
@@ -156,51 +195,89 @@ export default {
                     q: this.queryText || ''
                 }
             }).then((res) => {
-                this.totalNumber = Number(res.headers['map']['X-Total-Count'][0])
+                this.totalNumber = Number(res.headers['map']['X-Total-Count'][0]);
+                this.currentPage = pageNumber;
                 var that = this;
                 this.tableContent = Linq.from(res.body).select(v => {
                     return {
-                        id:v.id,
+                        id: v.id,
+                        station_name: v.station_name,
                         station_code: v.station_code,
                         city_code: v.city_code,
-                        city_name: Linq.from(that.citys).firstOrDefault('x=>x.city_code=="'+v.city_code+'"').city_name,
-                        company_name:Linq.from(that.companys).firstOrDefault('x=>x.company_code=="'+v.company_code+'"').company_name,
-                        company_info:v.company_info
+                        city_name: Linq.from(that.citys).singleOrDefault('x=>x.city_code=="' + v.city_code + '"').city_name,
+                        company_code: v.company_code,
+                        company_name: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
+                        station_info: v.station_info
                     }
                 }).toArray();
+            });
+        },
+        changePage: function (pageNumber) {
+            this.search(pageNumber);
+        },
+        changePageSize:function(pageSize){
+            this.pageSize=pageSize;
+            this.search(1);
+        },
+        delStation(id) {
+            this.$Modal.confirm({
+                content: '<h3>确认删除该车站么</h3>',
+                onOk: () => {
+                    this.$http.delete('http://localhost:3000/stations/' + id
+                    ).then((res) => {
+                        this.$Message.info('删除了车站');
+                        this.search(1);
+                    });
+                },
+                onCancel: () => {
+                    this.$Message.info('取消删除');
+                }
+            });
+        },
+        addStation() {
+            this.$http.post('http://localhost:3000/stations', {
+                station_name: this.addStationModel.station_name,
+                station_code: Math.random().toString(32).substr(2),
+                city_code: this.addStationModel.city_code,
+                station_info: this.addStationModel.station_info,
+                company_code: this.addStationModel.company_code
+            }).then((res) => {
+                this.$Message.success('添加成功');
+                this.search(1);
+            }, (res) => {
+                this.$Message.error('添加失败:' + res.body);
+            })
+        },
+        editStationShow: function (station) {
+            console.log(station);
+            this.editModal = true;
+            this.editStationModel = station;
+        },
+        editStation: function () {
+            this.$http.put('http://localhost:3000/stations/'+this.editStationModel.id, {
+                station_name: this.editStationModel.station_name,
+                station_code: this.editStationModel.station_code,
+                city_code: this.editStationModel.city_code,
+                station_info: this.editStationModel.station_info,
+                company_code: this.editStationModel.company_code
+            }).then((res) => {
+                this.$Message.success('编辑成功');
+                this.search(1);
+            }, (res) => {
+                this.$Message.error('编辑失败:' + res.body);
+            })
+        }
+    },
+    mounted: function () {
+        this.$http.get('http://localhost:3000/citys'
+        ).then((res) => {
+            this.citys = res.body;
         });
-    },
-    changePage: function (pageNumber) {
-        this.search(pageNumber);
-    },
-    delStation(id) {
-        this.$Modal.confirm({
-            content: '<h3>确认删除该车站么</h3>',
-            onOk: () => {
-                this.$http.delete('http://localhost:3000/stations/' + id
-                ).then((res) => {
-                    this.$Message.info('删除了车站');
-                    this.search(1);
-                });
-            },
-            onCancel: () => {
-                this.$Message.info('取消删除');
-            }
+        this.$http.get('http://localhost:3000/companys'
+        ).then((res) => {
+            this.companys = res.body;
         });
-    },
-    addStation() {
-
+        this.search(1);
     }
-},
-mounted: function () {
-    this.$http.get('http://localhost:3000/citys'
-    ).then((res) => {
-        this.citys = res.body;
-    });
-    this.$http.get('http://localhost:3000/companys'
-    ).then((res) => {
-        this.companys = res.body;
-    });
-}
 }
 </script>

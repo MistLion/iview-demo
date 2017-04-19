@@ -2,7 +2,7 @@
     <Row type="flex">
         <Col span="4">
         <Menu :theme="theme2"
-              active-name="/Car/Car"
+              :active-name="$route.path"
               width="auto"
               v-on:on-select="jump">
             <Menu-item name="/Car/Car">
