@@ -223,23 +223,12 @@
   ],
   "stations": [
     {
-<<<<<<< HEAD
-=======
-      "id": 1,
-      "station_name": "合肥汽车站中心站",
-      "station_code": "hf0001",
-      "city_code": "ahhf01",
-      "company_code": "aaa",
-      "station_info": ""
-    },
-    {
->>>>>>> origin/master
-      "id": 2,
       "station_name": "合肥汽车站南区",
       "station_code": "hf0002",
       "city_code": "ahhf01",
-      "company_code": "aaa",
-      "station_info": ""
+      "station_info": "",
+      "company_code": "bbb",
+      "id": 2
     },
     {
       "id": 3,
@@ -298,29 +287,20 @@
       "station_info": ""
     },
     {
-<<<<<<< HEAD
       "id": 10,
       "station_name": "杭州汽车站北区",
       "station_code": "hz0005",
       "city_code": "zjhz01",
       "company_code": "ccc",
       "station_info": ""
-=======
-      "station_name": "杭州汽车站北区",
-      "station_code": "hz0005",
-      "city_code": "zjhz01",
-      "station_info": "1111",
-      "company_code": "bbb",
-      "id": 10
     },
     {
-      "station_name": "阜阳车站",
-      "station_code": "4obamio69e8",
-      "city_code": "ahfy01",
-      "station_info": "阜阳汽车站",
-      "company_code": "ccc",
+      "station_name": "11",
+      "station_code": "le97f9857kg",
+      "city_code": "ahhf01",
+      "station_info": "111",
+      "company_code": "",
       "id": 11
->>>>>>> origin/master
     }
   ],
   "citys": [
