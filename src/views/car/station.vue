@@ -68,7 +68,7 @@
                     </Select>
                 </Form-item>
                 <Form-item label="选择单位">
-                    <Select v-model="addStationModel.company_name"
+                    <Select v-model="addStationModel.company_code"
                             placeholder="请选择">
                         <Option v-for="item in companys"
                                 :value="item.company_code"
@@ -204,9 +204,9 @@ export default {
                         station_name: v.station_name,
                         station_code: v.station_code,
                         city_code: v.city_code,
-                        city_name: Linq.from(that.citys).singleOrDefault('x=>x.city_code=="' + v.city_code + '"').city_name,
+                        city_name: Linq.from(that.citys).singleOrDefault('x=>x.city_code=="' + v.city_code + '"').city_name||'-',
                         company_code: v.company_code,
-                        company_name: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
+                        company_name: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name||'-',
                         station_info: v.station_info
                     }
                 }).toArray();
@@ -247,9 +247,14 @@ export default {
             }, (res) => {
                 this.$Message.error('添加失败:' + res.body);
             })
+            this.addStationModel={
+                station_name: '',
+                city_code: '',
+                station_info: '',
+                company_code: '',
+            };
         },
         editStationShow: function (station) {
-            console.log(station);
             this.editModal = true;
             this.editStationModel = station;
         },
