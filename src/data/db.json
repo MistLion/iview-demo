@@ -301,6 +301,14 @@
       "station_info": "111",
       "company_code": "",
       "id": 11
+    },
+    {
+      "station_name": "吴湖汽车站",
+      "station_code": "krqe798s96o",
+      "city_code": "ahwh01",
+      "station_info": "111",
+      "company_code": "",
+      "id": 12
     }
   ],
   "citys": [

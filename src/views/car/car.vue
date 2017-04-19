@@ -55,7 +55,7 @@
 <Table :context="self" :data="carsData" :columns="carsTable" highlight-row stripe></Table>
 <div style="margin: 10px;overflow: hidden">
 <div style="float: right;">
-<Page :total="totalNumber" :current="1" :page-size="pageSize" v-on:on-change="changePage" show-sizer></Page>
+<Page :total="totalNumber" :current="1" :page-size="pageSize" v-on:on-change="changePage" v-on:on-page-size-change="changePageSize" show-sizer></Page>
 </div>
 </div>
 
@@ -228,7 +228,7 @@
                     this.carsData = Linq.from(res.body).select(v => {
                         return {
                             id: v.id,
-                            company:Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
+                            company: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
                             car_type: v.car_type,
                             car_plate: v.car_plate,
                             seat_count: v.seat_count,
@@ -242,6 +242,10 @@
             },
             changePage: function (pageNumber) {
                 this.search(pageNumber);
+            },
+            changePageSize: function (pageSize) {
+                this.pageSize = pageSize;
+                this.search(1);
             },
             delCar(id) {
                 this.$Modal.confirm({
