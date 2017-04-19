@@ -55,7 +55,8 @@
 <Table :context="self" :data="carsData" :columns="carsTable" highlight-row stripe></Table>
 <div style="margin: 10px;overflow: hidden">
 <div style="float: right;">
-<Page :total="totalNumber" :current="1" :page-size="pageSize" v-on:on-change="changePage" v-on:on-page-size-change="changePageSize" show-sizer></Page>
+<Page :total="totalNumber" :current="currentPage" :page-size="pageSize" v-on:on-change="changePage" v-on:on-page-size-change="changePageSize"
+    show-sizer></Page>
 </div>
 </div>
 
@@ -89,6 +90,43 @@
         </Form-item>
         <Form-item label="状态">
             <i-switch v-model="createItem.state" size="large">
+                <span slot="open" :value="1">启用</span>
+                <span slot="close" :value="0">停用</span>
+            </i-switch>
+        </Form-item>
+    </Form>
+</Modal>
+
+<Modal v-model="editModal" title="编辑车辆" @on-ok="editCar" @on-cancel="$Message.info('取消编辑');">
+    <Form :model="editItem" :label-width="80">
+        <Form-item label="所属单位">
+            <Select v-model="editItem.company_code" placeholder="请选择">
+                        <Option v-for="item in companys"
+                                :value="item.company_code"
+                                :key="item">{{ item.company_name }}</Option>
+            </Select>
+        </Form-item>
+        <Form-item label="车型">
+            <Select v-model="editItem.car_type" placeholder="请选择">
+                        <Option v-for="item in cars_types"
+                                :value="item.value"
+                                :key="item">{{ item.label }}</Option>
+                    </Select>
+        </Form-item>
+        <Form-item label="车牌号">
+            <Input v-model="editItem.car_plate"></Input>
+        </Form-item>
+        <Form-item label="座位数">
+            <Input v-model="editItem.seat_count"></Input>
+        </Form-item>
+        <Form-item label="司机姓名">
+            <Input v-model="editItem.driver"></Input>
+        </Form-item>
+        <Form-item label="司机手机号">
+            <Input v-model="editItem.driver_mobile"></Input>
+        </Form-item>
+        <Form-item label="状态">
+            <i-switch v-model="editItem.state" size="large">
                 <span slot="open">启用</span>
                 <span slot="close">停用</span>
             </i-switch>
@@ -147,13 +185,17 @@
                     seat_count: '',
                     driver: '',
                     driver_mobile: '',
-                    state: ''
+                    state: '1'
                 },
                 createModal: false,
+
+                editModal: false,
+                editItem: {},
 
                 self: this,
                 pageSize: 10,
                 totalNumber: 10,
+                currentPage: 1,
 
                 carsData: [],
                 carsTable: [
@@ -190,8 +232,8 @@
                         title: '状态',
                         key: 'state',
                         render(row) {
-                            const color = row.state == 1 ? 'green' : 'red';
-                            const text = row.state == 1 ? '启用' : '停用';
+                            const color = row.state ? 'green' : 'red';
+                            const text = row.state  ? '启用' : '停用';
                             return `<tag type="dot" color="${color}">${text}</tag>`;
                         }
                     },
@@ -199,7 +241,7 @@
                         title: '操作',
                         key: 'action',
                         render(row, column, index) {
-                            return `<Button-group> <i-button @click="delCar(${row.id})" type="ghost" style="color:red">删除</i-button><i-button type="ghost" >编辑</i-button></Button-group>`;
+                            return `<Button-group> <i-button @click="delCar(${row.id})" type="ghost" style="color:red">删除</i-button><i-button  @click="editCarShow(row)"  type="ghost" >编辑</i-button></Button-group>`;
                         }
                     }
                 ]
@@ -223,18 +265,20 @@
                 this.$http.get('http://localhost:3000/cars', {
                     params: params
                 }).then((res) => {
-                    this.totalNumber = Number(res.headers['map']['X-Total-Count'][0])
+                    this.totalNumber = Number(res.headers['map']['X-Total-Count'][0]);
+                    this.currentPage = pageNumber;
                     var that = this;
                     this.carsData = Linq.from(res.body).select(v => {
                         return {
                             id: v.id,
+                            company_code:v.company_code,
                             company: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
                             car_type: v.car_type,
                             car_plate: v.car_plate,
                             seat_count: v.seat_count,
                             driver: v.driver,
                             driver_mobile: v.driver_mobile,
-                            state: v.state
+                            state: v.state=="1"
                         }
                     }).toArray();
                 });
@@ -262,13 +306,59 @@
                     }
                 });
             },
-            addCar() { },
+
+            addCar() {
+                this.$http.post('http://localhost:3000/cars', {
+                    company_code: this.createItem.company_code,
+                    car_type: this.createItem.car_type,
+                    car_plate: this.createItem.car_plate,
+                    seat_count: this.createItem.seat_count,
+                    driver: this.createItem.driver,
+                    driver_mobile: this.createItem.driver_mobile,
+                    state: this.createItem.state?"1":"0"
+                }).then((res) => {
+                    this.$Message.success('添加成功');
+                    this.search(1);
+                }, (res) => {
+                    this.$Message.error('添加失败:' + res.body);
+                })
+                this.createItem = {
+                    company_code: '',
+                    car_type: '',
+                    car_plate: '',
+                    seat_count: '',
+                    driver: '',
+                    driver_mobile: '',
+                    state: ''
+                };
+            },
+            editCarShow: function (car) {
+                this.editModal = true;
+                this.editItem = car;
+            },
+            editCar: function () {
+                this.$http.put('http://localhost:3000/cars/' + this.editItem.id, {
+                    company_code: this.editItem.company_code,
+                    car_type: this.editItem.car_type,
+                    car_plate: this.editItem.car_plate,
+                    seat_count: this.editItem.seat_count,
+                    driver: this.editItem.driver,
+                    driver_mobile:this.editItem.driver_mobile,
+                    state:this.editItem.state
+                }).then((res) => {
+                    this.$Message.success('编辑成功');
+                    this.search(1);
+                }, (res) => {
+                    this.$Message.error('编辑失败:' + res.body);
+                })
+            }
         },
         mounted: function () {
             this.$http.get('http://localhost:3000/companys'
             ).then((res) => {
                 this.companys = res.body;
             });
+            this.search(1);
         }
     }
 </script>
