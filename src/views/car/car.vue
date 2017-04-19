@@ -1,10 +1,13 @@
 <template>
     <div>
+        <!--面包屑-->
         <Breadcrumb style="padding-top:20px">
 <Breadcrumb-item href="/">首页</Breadcrumb-item>
 <Breadcrumb-item href="/User">直通车管理</Breadcrumb-item>
 <Breadcrumb-item>车辆管理</Breadcrumb-item>
 </Breadcrumb>
+
+<!--搜素栏-->
 <Form :label-width="80" style="padding:20px 0 0 0;height:100%">
 <Row :gutter="10">
     <Col span="4">
@@ -18,6 +21,8 @@
 <Col span="5" offset="3">
 <Form-item label="单位">
     <Select v-model="company_code">
+        <Option :value="0" >全部
+        </Option>
                         <Option v-for="item in companys"
                                 :value="item.company_code"
                                 :key="item">{{ item.company_name }}</Option>
@@ -42,16 +47,15 @@
                     </Select>
 </Form-item>
 </Col>
-
 <Col span="2">
 <Button-group style="float:right">
-
 <Button icon="search" type="ghost" @click="search(1)">查询</Button>
 </Button-group>
 </Col>
 </Row>
 </Form>
 
+<!--表格-->
 <Table :context="self" :data="carsData" :columns="carsTable" highlight-row stripe></Table>
 <div style="margin: 10px;overflow: hidden">
 <div style="float: right;">
@@ -59,6 +63,7 @@
     show-sizer></Page>
 </div>
 </div>
+
 
 <Modal v-model="createModal" title="添加" @on-ok="addCar" @on-cancel="$Message.info('取消添加');">
     <Form :model="createItem" :label-width="80">
@@ -90,13 +95,14 @@
         </Form-item>
         <Form-item label="状态">
             <i-switch v-model="createItem.state" size="large">
-                <span slot="open" :value="1">启用</span>
-                <span slot="close" :value="0">停用</span>
+                <span slot="open">启用</span>
+                <span slot="close">停用</span>
             </i-switch>
         </Form-item>
     </Form>
 </Modal>
 
+<!--编辑弹窗弹窗-->
 <Modal v-model="editModal" title="编辑车辆" @on-ok="editCar" @on-cancel="$Message.info('取消编辑');">
     <Form :model="editItem" :label-width="80">
         <Form-item label="所属单位">
@@ -185,7 +191,7 @@
                     seat_count: '',
                     driver: '',
                     driver_mobile: '',
-                    state: '1'
+                    state: true
                 },
                 createModal: false,
 
@@ -233,7 +239,7 @@
                         key: 'state',
                         render(row) {
                             const color = row.state ? 'green' : 'red';
-                            const text = row.state  ? '启用' : '停用';
+                            const text = row.state ? '启用' : '停用';
                             return `<tag type="dot" color="${color}">${text}</tag>`;
                         }
                     },
@@ -271,14 +277,14 @@
                     this.carsData = Linq.from(res.body).select(v => {
                         return {
                             id: v.id,
-                            company_code:v.company_code,
-                            company: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name,
+                            company_code: v.company_code,
+                            company: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"') ? Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name : '-',
                             car_type: v.car_type,
                             car_plate: v.car_plate,
                             seat_count: v.seat_count,
                             driver: v.driver,
                             driver_mobile: v.driver_mobile,
-                            state: v.state=="1"
+                            state: v.state == "1"
                         }
                     }).toArray();
                 });
@@ -286,6 +292,10 @@
             },
             changePage: function (pageNumber) {
                 this.search(pageNumber);
+            },
+            changePageSize: function (pageSize) {
+                this.pageSize = pageSize;
+                this.search(1);
             },
             delCar(id) {
                 this.$Modal.confirm({
@@ -311,7 +321,7 @@
                     seat_count: this.createItem.seat_count,
                     driver: this.createItem.driver,
                     driver_mobile: this.createItem.driver_mobile,
-                    state: this.createItem.state?"1":"0"
+                    state: this.createItem.state ? "1" : "0"
                 }).then((res) => {
                     this.$Message.success('添加成功');
                     this.search(1);
@@ -339,8 +349,8 @@
                     car_plate: this.editItem.car_plate,
                     seat_count: this.editItem.seat_count,
                     driver: this.editItem.driver,
-                    driver_mobile:this.editItem.driver_mobile,
-                    state:this.editItem.state
+                    driver_mobile: this.editItem.driver_mobile,
+                    state: this.editItem.state? "1" : "0"
                 }).then((res) => {
                     this.$Message.success('编辑成功');
                     this.search(1);
