@@ -1,0 +1,15 @@
+[
+    {"city_id":"1","city_code":"ahhf01","city_name":"合肥市","provice_code":"anhui","provice_name":"安徽省","remark":"安徽省省会城市"},
+    {"city_id":"2","city_code":"ahwh01","city_name":"芜湖市","provice_code":"anhui","provice_name":"安徽省","remark":""},
+    {"city_id":"3","city_code":"ahxc01","city_name":"宣城市","provice_code":"anhui","provice_name":"安徽省","remark":""},
+    {"city_id":"4","city_code":"ahsz01","city_name":"宿州市","provice_code":"anhui","provice_name":"安徽省","remark":""},
+    {"city_id":"5","city_code":"ahfy01","city_name":"阜阳市","provice_code":"anhui","provice_name":"安徽省","remark":""},
+
+    {"city_id":"6","city_code":"jsnj01","city_name":"南京市","provice_code":"jiangsu","provice_name":"江苏省","remark":"江苏省省会城市"},
+    {"city_id":"7","city_code":"jsxz01","city_name":"徐州市","provice_code":"jiangsu","provice_name":"江苏省","remark":""},
+    {"city_id":"8","city_code":"jsyc01","city_name":"盐城市","provice_code":"jiangsu","provice_name":"江苏省","remark":""},
+    {"city_id":"9","city_code":"jsdy01","city_name":"丹阳市","provice_code":"jiangsu","provice_name":"江苏省","remark":""},
+    {"city_id":"10","city_code":"jssq01","city_name":"宿迁市","provice_code":"jiangsu","provice_name":"江苏省","remark":""},
+
+     {"city_id":"11","city_code":"zjhz01","city_name":"杭州市","provice_code":"zhejiang","provice_name":"浙江省","remark":"浙江省省会城市"}
+]
