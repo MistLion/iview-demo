@@ -1,10 +1,13 @@
 <template>
     <div>
+        <!--面包屑-->
         <Breadcrumb style="padding-top:20px">
             <Breadcrumb-item href="/">首页</Breadcrumb-item>
             <Breadcrumb-item href="/Car">直通车</Breadcrumb-item>
             <Breadcrumb-item>车站管理</Breadcrumb-item>
         </Breadcrumb>
+        
+        <!--搜素栏-->
         <Form :label-width="80"
               style="padding:20px 0 0 0;height:100%">
             <Row :gutter="16">
@@ -35,6 +38,8 @@
                 </Col>
             </Row>
         </Form>
+
+        <!--表格-->
         <Table :context="self"
                :data="tableContent"
                :columns="stationColumns"
@@ -49,6 +54,8 @@
                       show-sizer></Page>
             </div>
         </div>
+
+        <!--添加弹窗-->
         <Modal v-model="addModal"
                title="编辑车站"
                @on-ok="addStation"
@@ -83,6 +90,8 @@
                 </Form-item>
             </Form>
         </Modal>
+
+        <!--编辑弹窗弹窗-->
         <Modal v-model="editModal"
                title="编辑车站"
                @on-ok="editStation"
@@ -204,9 +213,9 @@ export default {
                         station_name: v.station_name,
                         station_code: v.station_code,
                         city_code: v.city_code,
-                        city_name: Linq.from(that.citys).singleOrDefault('x=>x.city_code=="' + v.city_code + '"').city_name||'-',
+                        city_name: Linq.from(that.citys).singleOrDefault('x=>x.city_code=="' + v.city_code + '"').city_name || '-',
                         company_code: v.company_code,
-                        company_name: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name||'-',
+                        company_name: Linq.from(that.companys).singleOrDefault('x=>x.company_code=="' + v.company_code + '"').company_name || '-',
                         station_info: v.station_info
                     }
                 }).toArray();
@@ -215,8 +224,8 @@ export default {
         changePage: function (pageNumber) {
             this.search(pageNumber);
         },
-        changePageSize:function(pageSize){
-            this.pageSize=pageSize;
+        changePageSize: function (pageSize) {
+            this.pageSize = pageSize;
             this.search(1);
         },
         delStation(id) {
@@ -247,7 +256,7 @@ export default {
             }, (res) => {
                 this.$Message.error('添加失败:' + res.body);
             })
-            this.addStationModel={
+            this.addStationModel = {
                 station_name: '',
                 city_code: '',
                 station_info: '',
@@ -259,7 +268,7 @@ export default {
             this.editStationModel = station;
         },
         editStation: function () {
-            this.$http.put('http://localhost:3000/stations/'+this.editStationModel.id, {
+            this.$http.put('http://localhost:3000/stations/' + this.editStationModel.id, {
                 station_name: this.editStationModel.station_name,
                 station_code: this.editStationModel.station_code,
                 city_code: this.editStationModel.city_code,

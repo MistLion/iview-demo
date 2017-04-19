@@ -287,10 +287,6 @@
             changePage: function (pageNumber) {
                 this.search(pageNumber);
             },
-            changePageSize: function (pageSize) {
-                this.pageSize = pageSize;
-                this.search(1);
-            },
             delCar(id) {
                 this.$Modal.confirm({
                     content: '<h3>确认删除该车辆吗？</h3>',
