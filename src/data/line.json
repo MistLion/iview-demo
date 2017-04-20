@@ -1,0 +1,13 @@
+[
+    {"id":"1","company_code":"aaa","line_code":"0117587dc17a9e83f","line_type":"1","class_type":"1",
+    "start_station_code":"hf0001","start_city_code":"ahhf01","end_station_code":"hz0001","end_city_code":"zjhz01",
+    "full_price":"80","pay_price":"78","leave_time":"09:00","interval_date":"","last_leave_time":"","line_state":"1"},
+
+    {"id":"2","company_code":"bbb","line_code":"0117587dc0c89d506","line_type":"1","class_type":"2",
+    "start_station_code":"hf0001","start_city_code":"ahhf01","end_station_code":"nj0001","end_city_code":"jsnj01",
+    "full_price":"60","pay_price":"58","leave_time":"07:30","interval_date":"60","last_leave_time":"14:30","line_state":"1"},
+
+    {"id":"3","company_code":"ccc","line_code":"0117587dc0418ad7d","line_type":"2","class_type":"3",
+    "start_station_code":"hf0002","start_city_code":"ahhf01","end_station_code":"hz0001","end_city_code":"zjhz01",
+    "full_price":"80","pay_price":"78","leave_time":"12:30","interval_date":"","last_leave_time":"","line_state":"1"}
+]
