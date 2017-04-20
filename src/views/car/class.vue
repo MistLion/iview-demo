@@ -112,9 +112,9 @@ export default {
                     key: 'action',
                     render(row, column, index) {
                         return `<Button-group> 
-                        <i-button @click="setClassState(${row.id})" type="info" >停运</i-button>
+                        <i-button @click="changeClassState(${row.id})" type="info" >停运</i-button>
                         <i-button  @click="editClassShow(row)"  type="ghost" >修改</i-button>
-                        <i-button @click="delCar(${row.id})" type="ghost" style="color:red">删除</i-button>
+                        <i-button @click="delClass(${row.id})" type="ghost" style="color:red">删除</i-button>
                         </Button-group>`;
                     },
                     width:220
@@ -172,6 +172,23 @@ export default {
             this.pageSize = pageSize;
             this.search(1);
         },
+        changeClassState:function(id){
+        },
+        delClass(id) {
+                this.$Modal.confirm({
+                    content: '<h3>确认删除该班次吗？</h3>',
+                    onOk: () => {
+                        this.$http.delete('http://localhost:3000/classes/' + id
+                        ).then((res) => {
+                            this.$Message.info('删除了班次');
+                            this.search(1);
+                        });
+                    },
+                    onCancel: () => {
+                        this.$Message.info('取消删除');
+                    }
+                });
+        }
     },
     computed: {
         cityDic: function () {

@@ -66,7 +66,7 @@
 
 
 <Modal v-model="createModal" title="添加" @on-ok="addCar" @on-cancel="$Message.info('取消添加');">
-    <Form :model="createItem" :label-width="80">
+    <Form :model="createItem" label-position="left" :label-width="90" style="padding:20px 25px 0 25px">
         <Form-item label="所属单位">
             <Select v-model="createItem.company_code" placeholder="请选择">
                         <Option v-for="item in companys"
@@ -104,7 +104,7 @@
 
 <!--编辑弹窗弹窗-->
 <Modal v-model="editModal" title="编辑车辆" @on-ok="editCar" @on-cancel="$Message.info('取消编辑');">
-    <Form :model="editItem" :label-width="80">
+    <Form :model="editItem" :label-width="90" label-position="left" style="padding:20px 25px 0 25px">
         <Form-item label="所属单位">
             <Select v-model="editItem.company_code" placeholder="请选择">
                         <Option v-for="item in companys"
