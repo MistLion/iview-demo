@@ -61,7 +61,8 @@
                @on-ok="addStation"
                @on-cancel="$Message.info('取消添加');">
             <Form :model="addStationModel"
-                  :label-width="80">
+                  :label-width="100"
+                  style="padding-right:20px">
                 <Form-item label="车站名称">
                     <Input v-model="addStationModel.station_name"
                            placeholder="请输入车站名称"></Input>
@@ -97,7 +98,8 @@
                @on-ok="editStation"
                @on-cancel="$Message.info('取消编辑');">
             <Form :model="editStationModel"
-                  :label-width="80">
+                  :label-width="100"
+                   style="padding-right:20px">
                 <Form-item label="车站名称">
                     <Input v-model="editStationModel.station_name"></Input>
                 </Form-item>

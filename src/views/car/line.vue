@@ -12,12 +12,8 @@
               :model="searchModel"
               style="padding:20px 0 0 0;height:100%">
             <Row :gutter="16">
-                <Col span="4">
+                <Col span="2">
                 <Button-group style="float:left">
-                    <Button icon="compose"
-                            type="ghost">导入</Button>
-                    <Button icon="document"
-                            type="ghost">导出</Button>
                     <Button type="ghost"
                             icon="plus"
                             @click="addModal = true">添加</Button>
@@ -33,7 +29,7 @@
                     </Select>
                 </Form-item>
                 </Col>
-                <Col span="4">
+                <Col span="5">
                 <Form-item label="班次类型">
                     <Select v-model="searchModel.class_type"
                             clearable>
@@ -43,7 +39,7 @@
                     </Select>
                 </Form-item>
                 </Col>
-                <Col span="4">
+                <Col span="5">
                 <Form-item label="线路状态">
                     <Select v-model="searchModel.line_state"
                             clearable>
@@ -84,6 +80,36 @@
                       show-sizer></Page>
             </div>
         </div>
+    
+        <!--添加弹窗-->
+        <Modal v-model="addModal"
+               title="添加线路"
+               @on-ok="addLine"
+               @on-cancel="$Message.info('取消添加');">
+            <From :model="addLineModel"
+                  :label-width="100"
+                  style="padding-right:20px"></From>
+        </Modal>
+    
+        <!--编辑弹窗-->
+        <Modal v-model="editModal"
+               title="编辑线路"
+               @on-ok="editLine"
+               @on-cancel="$Message.info('取消编辑');">
+            <From :model="editLineModel"
+                  :label-width="100"
+                  style="padding-right:20px"></From>
+        </Modal>
+    
+        <!--排班弹窗-->
+        <Modal v-model="classModal"
+               title="新增排班"
+               @on-ok="addClass"
+               @on-cancel="$Message.info('取消排班');">
+            <From :model="addClassModel"
+                  :label-width="100"
+                  style="padding-right:20px"></From>
+        </Modal>
     </div>
 </template>
 
@@ -119,20 +145,20 @@ export default {
             tableContent: [],
             lineColumns: [
                 { title: '单位名称', key: 'company_name' },
-                { title: '线路编码', key: 'line_code', width: 180 },
+                { title: '线路编码', key: 'line_code', ellipsis: true },
                 {
                     title: '班次类型', key: 'class_type',
                     render(row) {
                         return row.class_type == 1 ? '流水班' : row.class_type == 2 ? '固定班' : '临时班';
                     }
                 },
-                { title: '出发站点', key: 'start_station_name', width: 180 },
+                { title: '出发站点', key: 'start_station_name', ellipsis: true },
                 { title: '出发城市', key: 'start_city_name' },
-                { title: '到达站点', key: 'end_station_name', width: 180 },
+                { title: '到达站点', key: 'end_station_name', ellipsis: true },
                 { title: '到达城市', key: 'end_city_name' },
                 { title: '全票价', key: 'full_price', width: 80 },
                 { title: '结算价', key: 'pay_price', width: 80 },
-                { title: '最早发车时间', key: 'leave_time',width:120 },
+                { title: '最早发车时间', key: 'leave_time', width: 120 },
                 {
                     title: '线路状态', key: 'line_state',
                     render(row) {
@@ -140,17 +166,38 @@ export default {
                         const text = row.line_state == 1 ? '可预定' : row.line_state == 2 ? '不可预定' : '审核中';
                         return `<tag type="dot" color="${color}">${text}</tag>`;
                     },
-                    width:150
+                    width: 150
                 },
                 {
                     title: '操作',
                     key: 'action',
                     render(row, column, index) {
-                        return `<Button-group> <i-button @click="setClass(${row.id})" type="info" >排班</i-button><i-button  @click="editStationShow(row)"  type="ghost" >编辑</i-button></Button-group>`;
+                        return `<Button-group> <i-button @click="setClass(${row.id})" small type="info" >排班</i-button>
+                                               <i-button  @click="editLineShow(row)" small  type="ghost" >编辑</i-button>
+                                               <i-button  @click="delLine(${row.id})" small  type="ghost" style="color:red" >删除</i-button>
+                                               </Button-group>`;
                     },
-                    width:180
+                    width: 230
                 }
-            ]
+            ],
+            addModal: false,
+            editModal: false,
+            classModal: false,
+            editLineModel: {},
+            addLineModel: {
+                company_code: '',
+                class_type: '',
+                line_state: '',
+                start_city_code: '',
+                start_station_code: '',
+                end_city_code: '',
+                end_station_code: '',
+                leave_time: '',
+                full_price: '',
+                pay_price: ''
+            },
+            addClassModel: {
+            }
         }
     },
     methods: {
@@ -206,6 +253,12 @@ export default {
             this.pageSize = pageSize;
             this.search(1);
         },
+        addLine:function(){
+        },
+        editLine:function(){
+        },
+        addClass:function(){
+        }
     },
     computed: {
         cityDic: function () {
@@ -228,6 +281,9 @@ export default {
                 result[this.companys[index].company_code] = this.companys[index].company_name;
             }
             return result;
+        },
+        editLineShow: function (row) {
+
         }
     },
     mounted: function () {
@@ -243,7 +299,7 @@ export default {
         ).then((res) => {
             this.citys = res.body;
         });
-        // this.search(1);
+        this.search(1);
     }
 }
 </script>
